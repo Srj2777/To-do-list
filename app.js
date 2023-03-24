@@ -91,65 +91,53 @@ app.get("/:customListName", function (req, res) {
   list.save();
 });
 
-// This is still not working (going to work page and addition or any other page)
-app.post("/", function (req, res) {
-  // const item = req.body.newItem;
-
-  // if (req.body.list === "Work") {
-  //   workItems.push(item);
-  //   res.redirect("/work");
-  // } else {
-  //   items.push(item);
-  //   res.redirect("/");
-  // }
+//post route for root
+app.post("/", function(req, res){
 
   const itemName = req.body.newItem;
-  const listName = req.body.list.trim();
-
-  // if (listName) {
-  //   listName = listName.trim();
-  // }
-
-  const item = new Item({
-    name: itemName,
+  const listName = req.body.list;
+  const item_ = new Item({
+    name: itemName
   });
-
-  if (listName === "Today") {
-    item.save();
+  if(listName === "Today"){
+    item_.save();
     res.redirect("/");
-  } else {
-    List.findOne({ name: listName }, function (err, foundList) {
-      foundList.items.push(item); // see model schema
-      foundList.save();
-      res.redirect("/" + listName);
+  }
+  else{
+    List.findOne({name: listName},function(err,foundList){
+      if(!err)
+      {
+        foundList.items.push(item_);
+        foundList.save();
+        res.redirect("/"+listName);
+      }
     });
   }
+  
 });
 
-// This also is  still not working bcz page and not refreshing(going to work page and addition or any other page)
-app.post("/delete", function (req, res) {
-  const checkItemId = req.body.checkBox;
+//post route for delete 
+app.post("/delete",function(req,res){
   const listName = req.body.listName;
-
-  if (listName === "Today") {
-    Item.findByIdAndRemove(checkItemId, function (err) {
-      if (err) {
+  //console.log("I am here in delete");
+  //console.log(listName);
+  const itemid = req.body.checkbox;
+  if(listName === "Today"){
+    Item.findByIdAndRemove(itemid,function(err){
+      if(err)
         console.log(err);
-      } else {
-        console.log("Delete this id's " + checkItemId + " item");
-        res.redirect("/");
+      else
+        console.log("Successfully deleted");
+    });
+    res.redirect("/");
+  }
+  else{
+      List.findOneAndUpdate({name: listName},{$pull:{items:{_id:itemid}}},function(err,foundList){
+      if(!err)
+      {
+        res.redirect("/"+listName);
       }
     });
-  } else {
-    List.findOneAndUpdate(
-      { name: listName },
-      { $pull: { items: { _id: checkItemId } } },
-      function (err, foundList) {
-        if (!err) {
-          res.redirect("/" + listName);
-        }
-      }
-    );
   }
 });
 
