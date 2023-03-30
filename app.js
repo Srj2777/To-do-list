@@ -16,8 +16,8 @@ mongoose.set('strictQuery', true);
 //connecting to local server hosted database
 main().catch(err => console.log(err));
 async function main() {
-  await mongoose.connect('mongodb+srv://abhijeet:Test123@cluster0.jhedygn.mongodb.net/todolistDB');
-  // use `await mongoose.connect('mongodb://user:password@127.0.0.1:27017/todolistDB');` if your database has auth enabled
+  await mongoose.connect("mongodb+srv://admin-srj:srj1234@cluster0.6kkhxrd.mongodb.net/todolistDB");
+  // use `await mongoose.connect("mongodb+srv://admin-srj:srj1234@cluster0.6kkhxrd.mongodb.net/todolistDB");` if your database has auth enabled
 }
 
 //make the schema for the table or data
