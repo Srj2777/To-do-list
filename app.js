@@ -91,68 +91,6 @@ app.get("/:customListName", function (req, res) {
   list.save();
 });
 
-// // This is still not working (going to work page and addition or any other page)
-// app.post("/", function (req, res) {
-//   // const item = req.body.newItem;
-
-//   // if (req.body.list === "Work") {
-//   //   workItems.push(item);
-//   //   res.redirect("/work");
-//   // } else {
-//   //   items.push(item);
-//   //   res.redirect("/");
-//   // }
-
-//   const itemName = req.body.newItem;
-//   const listName = req.body.list.trim();
-
-//   // if (listName) {
-//   //   listName = listName.trim();
-//   // }
-
-//   const item = new Item({
-//     name: itemName,
-//   });
-
-//   if (listName === "Today") {
-//     item.save();
-//     res.redirect("/");
-//   } else {
-//     List.findOne({ name: listName }, function (err, foundList) {
-//       foundList.items.push(item); // see model schema
-//       foundList.save();
-//       res.redirect("/" + listName);
-//     });
-//   }
-// });
-
-// // This also is  still not working bcz page and not refreshing(going to work page and addition or any other page)
-// app.post("/delete", function (req, res) {
-//   const checkItemId = req.body.checkBox;
-//   const listName = req.body.listName;
-
-//   if (listName === "Today") {
-//     Item.findByIdAndRemove(checkItemId, function (err) {
-//       if (err) {
-//         console.log(err);
-//       } else {
-//         console.log("Delete this id's " + checkItemId + " item");
-//         res.redirect("/");
-//       }
-//     });
-//   } else {
-//     List.findOneAndUpdate(
-//       { name: listName },
-//       { $pull: { items: { _id: checkItemId } } },
-//       function (err, foundList) {
-//         if (!err) {
-//           res.redirect("/" + listName);
-//         }
-//       }
-//     );
-//   }
-// });
-
 //post route for root
 app.post("/", function (req, res) {
   const itemName = req.body.newItem;
