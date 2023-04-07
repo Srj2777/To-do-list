@@ -6,7 +6,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const _ = require("lodash");
 
-mongoose.set("strictQuery", true);
+mongoose.set("strictQuery", false);
 
 const app = express();
 
